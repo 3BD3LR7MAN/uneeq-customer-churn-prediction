@@ -1,0 +1,5 @@
+Actual_Churn,Predicted_Churn,Count
+No,No,840
+No,Yes,195
+Yes,No,127
+Yes,Yes,247
