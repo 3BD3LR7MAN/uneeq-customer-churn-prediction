@@ -1,0 +1,83 @@
+{
+  "threshold": 0.6477361201272028,
+  "precision": 0.5588235294117647,
+  "recall": 0.660427807486631,
+  "f1": 0.6053921568627451,
+  "pr_auc_average_precision": 0.6236054932920572,
+  "roc_auc": 0.8321837298819396,
+  "confusion_matrix": [
+    [
+      840,
+      195
+    ],
+    [
+      127,
+      247
+    ]
+  ],
+  "target_recall_goal": 0.7,
+  "target_recall_met_on_validation": true,
+  "target_recall_met_on_test": false,
+  "flagged_customers_on_test": 442,
+  "missed_churners_on_test": 127,
+  "selected_model": "Logistic Regression baseline",
+  "validation_threshold_tradeoff": [
+    {
+      "threshold": 0.5,
+      "precision": 0.5177065767284992,
+      "recall": 0.820855614973262,
+      "f1": 0.6349534643226473,
+      "flagged_customers": 593
+    },
+    {
+      "threshold": 0.6,
+      "precision": 0.5644171779141104,
+      "recall": 0.7379679144385026,
+      "f1": 0.6396292004634995,
+      "flagged_customers": 489
+    },
+    {
+      "threshold": 0.6477361201272028,
+      "precision": 0.5936794582392777,
+      "recall": 0.7032085561497327,
+      "f1": 0.6438188494492044,
+      "flagged_customers": 443
+    },
+    {
+      "threshold": 0.7,
+      "precision": 0.6373333333333333,
+      "recall": 0.6390374331550802,
+      "f1": 0.6381842456608812,
+      "flagged_customers": 375
+    }
+  ],
+  "validation_threshold_metrics": {
+    "threshold": 0.6477361201272028,
+    "precision": 0.5936794582392777,
+    "recall": 0.7032085561497327,
+    "f1": 0.6438188494492044
+  },
+  "baseline_validation_pr_auc": 0.6784094684583294,
+  "random_forest_validation_pr_auc": 0.6728782100586047,
+  "random_forest_best_cv_pr_auc": 0.6635943925472124,
+  "random_forest_best_params": {
+    "model__max_depth": 12,
+    "model__max_features": "log2",
+    "model__min_samples_leaf": 9,
+    "model__min_samples_split": 4,
+    "model__n_estimators": 378
+  },
+  "data": {
+    "rows_used": 7043,
+    "original_rows": 7043,
+    "columns_in_source": 21,
+    "totalcharges_missing_after_numeric_conversion": 11,
+    "churn_count": {
+      "No": 5174,
+      "Yes": 1869
+    },
+    "train_rows": 4225,
+    "validation_rows": 1409,
+    "test_rows": 1409
+  }
+}

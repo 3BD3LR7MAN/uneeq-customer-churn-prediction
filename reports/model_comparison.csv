@@ -1,0 +1,3 @@
+model,validation_pr_auc
+Logistic Regression baseline,0.6784094684583294
+Tuned Random Forest,0.6728782100586047
