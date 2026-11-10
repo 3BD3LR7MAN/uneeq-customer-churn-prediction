@@ -1,11 +1,11 @@
 # Data source and citation
 
-This project uses the **IBM Telco Customer Churn educational dataset**, commonly distributed as `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
+This project was evaluated on the **IBM Telco Customer Churn educational dataset**, commonly distributed as `WA_Fn-UseC_-Telco-Customer-Churn.csv`.
 
-Recommended citation/source reference:
+Suggested citation:
 
-> IBM Watson Analytics sample data, Telco Customer Churn dataset. The dataset is used here for educational and portfolio purposes.
+> IBM Watson Analytics sample data, Telco Customer Churn dataset. Used for educational and portfolio evaluation.
 
-Before publishing the raw CSV in a public repository, verify the dataset's current redistribution and licensing terms. If those terms are unclear, remove the CSV from the repository and document how a reviewer can obtain the original educational dataset.
+The source CSV is not included in this repository because its current redistribution and licensing terms have not been independently confirmed. Obtain the dataset from an authorized source and review its terms before local use. The project does not grant rights to the dataset.
 
-The `customerID` field is excluded from model features. Do not add private customer data, credentials, API keys, or secret tokens to this project.
+The source may include `customerID`; the training code excludes that field from model features, and the Power BI exporter omits it from row-level output. Do not commit the raw source file, model artifact, or row-level predictions to this repository.

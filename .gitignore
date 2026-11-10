@@ -1,4 +1,22 @@
+# Python and environments
 .venv/
+venv/
 __pycache__/
-.ipynb_checkpoints/
 *.py[cod]
+.ipynb_checkpoints/
+
+# Local source data, fitted models, and row-level exports
+/data/*.csv
+/models/*.joblib
+/reports/powerbi/PowerBI_test_predictions.csv
+
+# Local credentials and signing material
+.env
+.env.*
+!.env.example
+android/key.properties
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore

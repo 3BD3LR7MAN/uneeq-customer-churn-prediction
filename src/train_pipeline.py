@@ -159,7 +159,7 @@ def main() -> None:
 
     df = pd.read_csv(args.data)
     df.columns = df.columns.str.strip()
-    required = {"Churn", "customerID", "TotalCharges"}
+    required = {"Churn", "TotalCharges"}
     missing_columns = required.difference(df.columns)
     if missing_columns:
         raise ValueError(f"Missing required columns: {sorted(missing_columns)}")
@@ -174,7 +174,7 @@ def main() -> None:
     df = df.dropna(subset=["Churn"]).copy()
     df = df[df["Churn"].isin(["No", "Yes"])].copy()
 
-    X = df.drop(columns=["Churn", "customerID"])
+    X = df.drop(columns=["Churn", "customerID"], errors="ignore")
     y = df["Churn"].map({"No": 0, "Yes": 1}).astype(int)
     X_train, X_temp, y_train, y_temp = train_test_split(
         X, y, test_size=0.40, random_state=RANDOM_STATE, stratify=y
@@ -342,7 +342,7 @@ This project predicts which Telco customers are at risk of churn so a retention 
 - Source columns: **{df.shape[1]}**
 - Churned customers: **{int(rows.get('Yes', 0)):,} ({churn_rate:.1%})**
 - Split: **60% train / 20% validation / 20% test**, stratified and seeded with 42
-- `customerID` excluded from modeling
+- `customerID`, when present in a source file, is excluded from modeling and is not included in row-level Power BI exports
 - `TotalCharges` converted to numeric; **{totalcharges_missing_after_conversion}** blank values were replaced with 0 because those records have `tenure = 0`
 - Numeric imputation/scaling and categorical one-hot encoding are fitted inside the pipeline
 

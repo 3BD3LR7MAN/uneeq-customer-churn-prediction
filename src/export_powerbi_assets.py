@@ -34,7 +34,7 @@ def main():
         raise ValueError('Some blank TotalCharges rows have nonzero tenure; inspect before export.')
     df.loc[missing, 'TotalCharges'] = 0.0
 
-    X = df.drop(columns=['Churn', 'customerID'])
+    X = df.drop(columns=['Churn', 'customerID'], errors='ignore')
     y = df['Churn'].map({'No': 0, 'Yes': 1}).astype(int)
     _, X_temp, _, y_temp = train_test_split(
         X, y, test_size=0.40, random_state=42, stratify=y
@@ -49,7 +49,6 @@ def main():
     predictions = (probabilities >= threshold).astype(int)
 
     exported = X_test.copy()
-    exported.insert(0, 'customerID', df.loc[X_test.index, 'customerID'])
     exported['Actual_Churn'] = y_test.map({0: 'No', 1: 'Yes'})
     exported['Churn_Probability'] = probabilities
     exported['Predicted_Churn'] = np.where(predictions == 1, 'Yes', 'No')

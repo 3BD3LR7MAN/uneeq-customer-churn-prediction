@@ -36,11 +36,11 @@ python src/export_powerbi_assets.py \
 
 - `tenure`, `MonthlyCharges`, `TotalCharges`, `Churn_Probability`, `Decision_Threshold`, `Value`, و`Count`: أرقام.
 - `Churn`, `Actual_Churn`, `Predicted_Churn`, `Outcome`, `Contract`, `InternetService`: نصوص.
-- `customerID`: نص، وليس رقماً.
+- لا يظهر `customerID` في تصدير `TestPredictions` المنشور؛ يُستبعد من الميزات ومن المخرجات المشتركة.
 
 في الملف الأصلي، قد تُقرأ فراغات `TotalCharges` كنص. في هذه العينة تحديداً، القيم الإحدى عشرة التي تعذّر تحويلها تخص `tenure = 0` وقد عُوّضت بصفر في المعالجة. إذا كنت تنظف الملف داخل Power Query، حوّل العمود إلى Decimal Number، وافحص أخطاء التحويل، ثم عوّض بصفر **فقط** عندما تكون `tenure = 0`؛ لا تطبق ذلك تلقائياً على بيانات جديدة.
 
-لا تربط `TestPredictions` بجدول `Customers` باستخدام صفوف الجدول أو ترتيبها. إذا احتجت علاقة، استخدم `customerID` بعد التأكد من فرادته، أو أبق الجداول منفصلة واستخدم كل جدول للغرض المخصص له.
+تصدير `TestPredictions` المنشور لا يحتوي على معرّفات، لذلك لا تربطه بجدول `Customers` عبر ترتيب الصفوف. أبقِ الجداول منفصلة. إذا احتاج سير عمل داخلي مرخّص إلى مفتاح ربط، أضف رمزاً مستعاراً داخل بيئة خاصة ومصرّح بها، ولا تنشره في المستودع العام.
 
 ## 3) أنشئ مقاييس DAX
 
@@ -136,7 +136,7 @@ SWITCH(
 
 - أضف بطاقات `Precision`, `Recall`, `F1` من مقاييس DAX أعلاه.
 - أضف بطاقة `PR-AUC` باستيراد `PowerBI_model_metrics.csv` واستخدام قيمة صف `Metric = PR-AUC / Average Precision`؛ أو اعرضها من `ModelMetrics[Value]` بعد إضافة فلتر `Metric` المناسب.
-- أضف **Matrix visual**: `Rows = Actual_Churn`, `Columns = Predicted_Churn`, `Values = Count of customerID` من `TestPredictions`. يجب أن تكون أعداد الخلايا: TN=840، FP=195، FN=127، TP=247.
+- أضف **Matrix visual**: `Rows = Actual_Churn`, `Columns = Predicted_Churn`, `Values = Outcome Count` من `TestPredictions`. يجب أن تكون أعداد الخلايا: TN=840، FP=195، FN=127، TP=247.
 - لإظهار أسماء الحالات بدلاً من العدد، أضف مقياس `Outcome Count = COUNTROWS(TestPredictions)` واستخدمه في Values.
 - أضف شريط `FeatureImportance[importance_mean]` حسب `FeatureImportance[feature]` ورتّب تنازلياً، ثم طبّق Top N = 10 إذا ازدحم الرسم.
 - أضف بطاقة أو ملاحظة توضّح أن العتبة المستخدمة **0.6477**، وأن هدف Recall 70% تحقق في validation لكنه لم يتحقق على الاختبار (Recall الفعلي 66.0%).

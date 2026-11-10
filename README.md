@@ -1,19 +1,27 @@
 # Customer Churn Prediction Pipeline
 
-A reproducible machine-learning project for prioritizing Telco customers at risk of churn. It includes a Colab notebook, a local training CLI, a saved model, evaluation reports, explainability outputs, and Power BI-ready exports.
+A reproducible educational machine-learning project that compares Logistic Regression with a tuned Random Forest, selects a recall-oriented threshold on validation data, and exports aggregate Power BI metrics.
 
 ## Results
 
-The final model is the Logistic Regression reference model, selected because its validation PR-AUC (0.678) slightly exceeded the tuned Random Forest comparison (0.673). It is called a reference model because it is the simpler benchmark that won model selection—not because it is an unfinished model. The threshold 0.6477 was selected on validation for a 70% recall target. On the unseen test set: precision 0.559, recall 0.660, F1 0.605, PR-AUC 0.624, and ROC-AUC 0.832. The validation target did not fully generalize to test, so this result requires further calibration before operational use.
+The selected model is Logistic Regression because its validation PR-AUC (0.678) slightly exceeded the tuned Random Forest comparison (0.673). The threshold 0.6477 was selected on validation for a 70% recall target. On the held-out test set, precision is 0.559, recall 0.660, F1 0.605, PR-AUC 0.624, and ROC-AUC 0.832. The validation recall target did not fully generalize to test and requires further calibration before operational use.
 
-Read the reviewer-facing report: [`reports/Model_Report_EN.md`](reports/Model_Report_EN.md). The Arabic report is available at [`reports/Model_Report_AR.md`](reports/Model_Report_AR.md).
+See [`reports/Model_Report_EN.md`](reports/Model_Report_EN.md) and [`reports/Model_Report_AR.md`](reports/Model_Report_AR.md) for the evaluation details.
+
+## Data and privacy
+
+The IBM Telco CSV, fitted model artifact, and row-level Power BI prediction export are not included in this repository copy. Dataset redistribution terms were not independently confirmed, and the source contains a customer identifier field. Obtain the educational dataset from an authorized source only after reviewing its terms, then place it at `data/WA_Fn-UseC_-Telco-Customer-Churn.csv` for local training. The pipeline excludes `customerID` from features, and the Power BI exporter omits it from row-level output. Locally generated raw data, models, and row-level exports are ignored by Git. Do not publish those files without permission and a privacy review.
+
+See [`DATA_SOURCES.md`](DATA_SOURCES.md) and [`data/README.md`](data/README.md) for details.
 
 ## Quick start
+
+After obtaining an authorized local dataset file:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python src/train_pipeline.py \
   --data data/WA_Fn-UseC_-Telco-Customer-Churn.csv \
   --output . \
@@ -22,7 +30,7 @@ python src/train_pipeline.py \
   --target-recall 0.70
 ```
 
-To regenerate Power BI exports:
+To regenerate aggregate Power BI outputs after training:
 
 ```bash
 python src/export_powerbi_assets.py \
@@ -31,24 +39,22 @@ python src/export_powerbi_assets.py \
   --output reports/powerbi
 ```
 
+The row-level export is local only, excludes `customerID`, and is ignored by Git. The checked-in Power BI files contain aggregate metrics and confusion-matrix counts only.
+
 ## Deliverables
 
 - `notebooks/Customer_Churn_Pipeline_Colab.ipynb` — Colab walkthrough
-- `src/train_pipeline.py` — reproducible training and evaluation
-- `src/export_powerbi_assets.py` — holdout predictions for Power BI
-- `models/churn_pipeline.joblib` — selected model and decision threshold
-- `reports/Model_Report_EN.md` — English model report
-- `reports/Model_Report_AR.md` — Arabic model report
-- `reports/figures/` — class distribution, tenure, category, tenure-band, confusion-matrix, and importance charts
-- `reports/threshold_tradeoff.csv` — validation operating-point comparison for threshold selection
-- `DATA_SOURCES.md` — dataset citation and redistribution guidance
-- `reports/powerbi/` — test predictions, confusion matrix, and model metrics
+- `src/train_pipeline.py` — training, threshold selection, evaluation, and report generation
+- `src/export_powerbi_assets.py` — local Power BI export; customer identifiers are omitted
+- `reports/Model_Report_EN.md` and `reports/Model_Report_AR.md` — reviewer-facing reports
+- `reports/figures/` — EDA, confusion matrix, and importance charts
+- `reports/threshold_tradeoff.csv` — validation operating-point comparison
+- `reports/powerbi/` — aggregate confusion matrix and model metrics
 
-## Business interpretation
+## Business interpretation and limitations
 
-At the selected threshold, the holdout evaluation flags 442 customers, correctly identifies 247 churners, and misses 127 churners. A real retention workflow should define the intervention cost and expected customer value, then recalibrate the threshold on current data. The model is a prioritization aid, not an automatic decision system.
+At the selected threshold, the held-out test evaluation flags 442 customers, correctly identifies 247 churners, and misses 127 churners. A real retention workflow should attach intervention costs and customer value, recalibrate on current data, and monitor subgroup performance and drift. This model is a prioritization aid, not an automatic decision system.
 
+## Software license
 
-## Data note
-
-The included CSV is the IBM Telco Customer Churn educational dataset. See [`DATA_SOURCES.md`](DATA_SOURCES.md) for citation and redistribution guidance. Review the current terms before publishing the raw file; if redistribution is not permitted, remove the CSV from the public repository and document how reviewers can obtain it.
+No open-source license is granted for this project's code at this time. Public visibility does not grant permission to reuse or redistribute it. The IBM educational dataset has separate source terms and is not licensed by this repository. Add a project license only after confirming the copyright holder and their authority to grant it.
