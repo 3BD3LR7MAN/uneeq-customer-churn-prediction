@@ -48,13 +48,6 @@ python src/export_powerbi_assets.py \
 
 At the selected threshold, the holdout evaluation flags 442 customers, correctly identifies 247 churners, and misses 127 churners. A real retention workflow should define the intervention cost and expected customer value, then recalibrate the threshold on current data. The model is a prioritization aid, not an automatic decision system.
 
-## Submission checklist
-
-- [ ] Publish the contents of `GitHub_Ready` in a public GitHub repository.
-- [ ] Add the final repository URL here and to the LinkedIn post.
-- [ ] Record and publish a focused 60–90 second churn demo video.
-- [ ] Share the repository and video on LinkedIn and tag UneeQ Interns.
-- [ ] Do not publish API keys, passwords, tokens, private data, or credentials.
 
 ## Data note
 
