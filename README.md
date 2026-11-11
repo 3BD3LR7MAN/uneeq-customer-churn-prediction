@@ -2,6 +2,12 @@
 
 A reproducible educational machine-learning project that compares Logistic Regression with a tuned Random Forest, selects a recall-oriented threshold on validation data, and exports aggregate Power BI metrics.
 
+## Demo video
+
+[Watch the narrated customer-churn demo on Google Drive](https://drive.google.com/file/d/1yXLvK6oFT_6QYG4tiOYj223wN8CiTvfF/view?usp=sharing)
+
+The video explains the EDA, baseline and improved model comparison, validation threshold selection, held-out test results, business interpretation, and limitations.
+
 ## Results
 
 The selected model is Logistic Regression because its validation PR-AUC (0.678) slightly exceeded the tuned Random Forest comparison (0.673). The threshold 0.6477 was selected on validation for a 70% recall target. On the held-out test set, precision is 0.559, recall 0.660, F1 0.605, PR-AUC 0.624, and ROC-AUC 0.832. The validation recall target did not fully generalize to test and requires further calibration before operational use.
